@@ -12,6 +12,6 @@ The implementations do not use a medium to store the messages, but an online are
 The apps are self-explanatory.
 Note: The difference between the SOFT and HARD option of iForum/uForum and UDPForum is:
 - SOFT: If a participant is banned, they can "re-register" using a different user ID.
-- HARD: If a participant is banned, their ID and computer are locked. They can only "re-register" using a different computer.
+- HARD: If a participant is banned, their ID and computer are "banned". They can only "re-register" using a different computer.
 
 iForum, uForum and UDPForum create a UserList file "ForumUserList.txt" if the file does not exist and store the ID, PW and computer disk ID in a simple decrypted string. Each line for each registered participant. The PW of a banned participant is deleted and replaced with a hexadecimal number 0x03.
