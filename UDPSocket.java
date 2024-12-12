@@ -23,7 +23,7 @@ public class UDPSocket extends DatagramSocket {
     port = pkt.getPort();
     ia = pkt.getAddress();
     send(pkt); // send this pkt to client   
-    TimeUnit.MILLISECONDS.sleep(10); // and wait for draining...
+    TimeUnit.MICROSECONDS.sleep(10); // and wait for draining...
   }
   /**
   send
@@ -33,7 +33,7 @@ public class UDPSocket extends DatagramSocket {
   public void send(String msg) throws Exception {
     if (closed) throw new Exception("UDPSocket is closed.");
     send(new DatagramPacket(msg.getBytes(), msg.length(), ia, port));
-    TimeUnit.MILLISECONDS.sleep(10); // wait for draining
+    TimeUnit.MICROSECONDS.sleep(10); // wait for draining
   }
   /**
   send
@@ -43,7 +43,7 @@ public class UDPSocket extends DatagramSocket {
   public void send(byte[] msg) throws Exception {
     if (closed) throw new Exception("UDPSocket is closed.");
     send(new DatagramPacket(msg, msg.length, ia, port));
-    TimeUnit.MILLISECONDS.sleep(10);
+    TimeUnit.MICROSECONDS.sleep(10);
   }
   /**
   send
@@ -58,7 +58,7 @@ public class UDPSocket extends DatagramSocket {
     byte[] bb = new byte[len];
     System.arraycopy(msg, idx, bb, 0, len);
     send(new DatagramPacket(bb, len, ia, port));
-    TimeUnit.MILLISECONDS.sleep(10); // wait for draining
+    TimeUnit.MICROSECONDS.sleep(10); // wait for draining
   }
   /**
   read
@@ -147,7 +147,7 @@ public class UDPSocket extends DatagramSocket {
   }
   private void calibrate(DatagramPacket pkt) throws Exception {
     send(pkt); // ping the host to get real InetAddress and port
-    TimeUnit.MILLISECONDS.sleep(10); // wait for draining
+    TimeUnit.MICROSECONDS.sleep(10); // wait for draining
     // then wait for reply...
     receive(pkt);
     ia = pkt.getAddress();
@@ -156,6 +156,5 @@ public class UDPSocket extends DatagramSocket {
   //
   private int port;
   private InetAddress ia;
-  private UDPSocket me = this;
   private volatile boolean closed = false;
 }

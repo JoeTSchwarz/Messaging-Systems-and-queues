@@ -92,7 +92,7 @@ public class iForum extends JFrame implements ActionListener {
         StringBuilder sb = new StringBuilder();
         for (int i = 0, mx = users.size(); i < mx; ++i) sb.append(users.get(i)+"\n");
         while(locked) { // is locked ?
-          TimeUnit.MILLISECONDS.sleep(50);
+          TimeUnit.MICROSECONDS.sleep(50);
         }
         locked = true; // lock it  
         FileOutputStream fou = new FileOutputStream(ufile); // NOT extended
@@ -196,7 +196,7 @@ public class iForum extends JFrame implements ActionListener {
                 taLog.append(iTalk+"to everyone: "+txt+"\n");
               }
               while(locked) { // is locked?
-                TimeUnit.MILLISECONDS.sleep(50);
+                TimeUnit.MICROSECONDS.sleep(50);
               }
               locked = true; // lock it
               for (int j = 0, s = chatters.size(); j < s; ++j)
@@ -215,7 +215,7 @@ public class iForum extends JFrame implements ActionListener {
                 taLog.append(iTalk+"to <"+who+"> "+txt+"\n");
               }
               while(locked) { // is locked?
-                TimeUnit.MILLISECONDS.sleep(50);
+                TimeUnit.MICROSECONDS.sleep(50);
               }
               locked = true; // lock it
               try {
@@ -242,7 +242,7 @@ public class iForum extends JFrame implements ActionListener {
       for (int i = 0; i < s; ++i) sb.append(chatters.get(i)+"!");
       byte[] bb = sb.toString().getBytes( );
       while(locked) { // is locked?
-        TimeUnit.MILLISECONDS.sleep(50);
+        TimeUnit.MICROSECONDS.sleep(50);
       }
       locked = true; // lock it
       for (int i = 0; i < s; ++i) {
@@ -251,7 +251,7 @@ public class iForum extends JFrame implements ActionListener {
           o.write(bb);
           o.flush( );
         } catch (Exception x) { }
-        TimeUnit.MILLISECONDS.sleep(10);
+        TimeUnit.MICROSECONDS.sleep(10);
       }
       locked = false;
     }
@@ -299,7 +299,7 @@ public class iForum extends JFrame implements ActionListener {
       // register
       if (data.charAt(0) == (char)0x03) {
         while(locked) { // is locked?
-          TimeUnit.MILLISECONDS.sleep(50);
+          TimeUnit.MICROSECONDS.sleep(50);
         }
         locked = true; // lock it
         for (String user:users) if (user.indexOf(els[0]) == 0 || !soft && user.indexOf(els[2]) > 0) {
@@ -385,7 +385,7 @@ public class iForum extends JFrame implements ActionListener {
      closed = true; //shutdown the server
      if (cServer != null) try {
        cServer.close();
-       Thread.sleep(50);
+       Thread.sleep(10);
      } catch (Exception e) { }
     pool.shutdownNow();
     System.exit(0);
