@@ -80,7 +80,7 @@ public class UDPForum extends Thread implements ActionListener {
             StringBuilder sb = new StringBuilder(); // ignore ALL start at 1
             for (int i = 1, mx = users.size(); i < mx; ++i) sb.append(users.get(i)+"\n");
             while(locked) { // is locked ?
-              TimeUnit.MILLISECONDS.sleep(50);
+              TimeUnit.MICROSECONDS.sleep(50);
             }
             locked = true; // lock it  
             FileOutputStream fou = new FileOutputStream(ufile); // NOT extended
@@ -182,7 +182,7 @@ public class UDPForum extends Thread implements ActionListener {
           id = "u"+String.format("%08X", (int)(System.nanoTime() & 0xFFFFFFFF));
           uc = new uChatter(ia, port, id, X);
           while(locked) { // is locked?
-            TimeUnit.MILLISECONDS.sleep(50);
+            TimeUnit.MICROSECONDS.sleep(50);
           }
           locked = true; // lock it
           // single profile: only user per computer
@@ -255,7 +255,7 @@ public class UDPForum extends Thread implements ActionListener {
           if (chatters.size() > 0) {
             buf = ("@everyone: "+data).getBytes();
             while(locked) { // is locked?
-              TimeUnit.MILLISECONDS.sleep(50);
+              TimeUnit.MICROSECONDS.sleep(50);
             }
             locked = true; // lock it
             for (String chatter:chatters) {
@@ -272,7 +272,7 @@ public class UDPForum extends Thread implements ActionListener {
           uc = cList.get(who);
           buf = ("<"+id+"> "+data).getBytes();
           while(locked) { // is locked?
-            TimeUnit.MILLISECONDS.sleep(50);
+            TimeUnit.MICROSECONDS.sleep(50);
           }
           locked = true; // lock it
           ds.send(new DatagramPacket(buf, buf.length, uc.ip, uc.port));
@@ -287,7 +287,7 @@ public class UDPForum extends Thread implements ActionListener {
     private void updateList(byte[] buf) throws Exception {
       // send updated userList
       while(locked) { // is locked?
-        TimeUnit.MILLISECONDS.sleep(50);
+        TimeUnit.MICROSECONDS.sleep(50);
       }
       locked = true; // lock it
       for (String chatter:chatters) {
@@ -349,11 +349,11 @@ public class UDPForum extends Thread implements ActionListener {
             DatagramSocket ds = new DatagramSocket();
             ds.send(new DatagramPacket(buf, buf.length, u.ip, u.port));
           }
-          TimeUnit.MILLISECONDS.sleep(50);
+          TimeUnit.MICROSECONDS.sleep(10);
         } catch (Exception ex) { }
         if (udpServer != null) try {
             udpServer.close( );
-            TimeUnit.MILLISECONDS.sleep(50);
+            TimeUnit.MICROSECONDS.sleep(10);
         } catch (Exception e) { }
         pool.shutdownNow();
         System.exit(0);

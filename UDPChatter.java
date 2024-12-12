@@ -162,7 +162,7 @@ public class UDPChatter extends JFrame implements ActionListener {
         if (dSoc != null) try {
           if (bye) {
             dSoc.send(new DatagramPacket(new byte[] {(byte)0x02}, 1, hostIP, port));
-            TimeUnit.MILLISECONDS.sleep(50);
+            TimeUnit.MICROSECONDS.sleep(10);
           }
           dSoc.close( );
         } catch (Exception e) { }
