@@ -14,8 +14,7 @@ public class UDPSocket extends DatagramSocket {
   }
   /**
   Constructor - instantiated by UDPSocketServer accept -
-  @param port int Port number
-  @param iaddr InetAddress of this host server
+  @param pkt DatagramPacket
   @Exception Exception thrown by JAVA
   */
   public UDPSocket(DatagramPacket pkt) throws Exception {
