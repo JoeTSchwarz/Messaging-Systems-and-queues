@@ -56,12 +56,11 @@ public class uChat extends JFrame implements ActionListener {
 		talkers.setBackground(Color.pink);
 		talkers.setFont(new Font("Times",Font.BOLD, 11));
 		talkers.addActionListener(this);
-		try {	// login and get iForum-ID
-	  	int p = hostPort.indexOf(':');
-			// verify ID & Password 
-			boolean closed = false;
+		try {	// login and get uForum-ID
       Authenticate au = new Authenticate(this);
 			if (au.isCanceled()) System.exit(0);
+	  	int p = hostPort.indexOf(':');
+			boolean closed = false;
       soc = new UDPSocket(Integer.parseInt(hostPort.substring(p+1, hostPort.length())),
                           hostPort.substring(0, p)
                          );
@@ -72,10 +71,10 @@ public class uChat extends JFrame implements ActionListener {
       } else { // forget PW
         soc.send((char)0x04+au.getEncryptedID()+"!"+au.getEncryptedPW()+"!"+au.getEncryptedDID());
       }
-      byte[] rep = soc.read( );
+      byte[] rep = soc.read();
       String msg = new String(rep, 0, rep.length);
       if (rep[0] == (byte)0x02) {
-        actionExit(msg);
+        actionExit(msg.substring(1));
       }
       isMe = msg.substring(msg.indexOf(" ID:")+4);
 			(new Listener( )).start();	
@@ -90,7 +89,7 @@ public class uChat extends JFrame implements ActionListener {
 		addWindowListener(
 			new WindowAdapter() {
 				public void windowClosing(WindowEvent we){
-					actionExit("I quit");
+					actionExit(null);
 				}
 			}
 		);
@@ -108,8 +107,8 @@ public class uChat extends JFrame implements ActionListener {
   public void actionExit(String msg) {
    	go = false;
  		try {
-      if (msg.charAt(0) != (char)0x02) soc.send(""+(char)0x02); // say Goodbye
-      else JOptionPane.showMessageDialog(this, msg.substring(1)); 
+      if (msg == null) soc.send(""+(char)0x02); // say Goodbye
+      else JOptionPane.showMessageDialog(this, msg); 
       soc.close( );
     } catch (Exception e) { 
       e.printStackTrace();
@@ -119,7 +118,6 @@ public class uChat extends JFrame implements ActionListener {
   private class Listener extends Thread {
    	public Listener( ) { }
    	public void run( ) {
-      String Z = "Forum is probably closed!";
    		try {
    			while (go) {
           byte[] rep = soc.read();
@@ -141,9 +139,7 @@ public class uChat extends JFrame implements ActionListener {
             });
 					} else {
             String msg = new String(rep, 0, rep.length);
-            if (rep[0] == (byte)0x02) {
-              actionExit(msg);
-            }
+            if (rep[0] == (byte)0x02) actionExit(msg.substring(1));
 						synchronized(taLog) {
 							taLog.append(msg+"\n");
 						}
@@ -151,7 +147,7 @@ public class uChat extends JFrame implements ActionListener {
 				}
 			} catch (Exception x) {
 				//x.printStackTrace();
-				actionExit(Z);
+				actionExit("Forum is probably closed!");
 			}
    	}
   }
