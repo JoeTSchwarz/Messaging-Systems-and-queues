@@ -192,7 +192,7 @@ public class UDPChatter extends JFrame implements ActionListener {
     private static int port;
     private static String host;
     public static void main(String[] args) {
-        if (args.length == 1) {
+        if (args.length == 1 && args[0].indexOf(":") > 0) {
             try {
                 UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
                 port = args[0].indexOf(':');
