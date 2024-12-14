@@ -170,7 +170,7 @@ public class uChat extends JFrame implements ActionListener {
   }
   public static void main(String... args) throws Exception {
     UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-    if (args.length == 1) {
+    if (args.length == 1 && args[0].indexOf(":") > 0) {
       new uChat("Joe's uChat", args[0]);
     } else {
       JOptionPane.showMessageDialog( null, "Usage: java uChat HostName:Port"); 
