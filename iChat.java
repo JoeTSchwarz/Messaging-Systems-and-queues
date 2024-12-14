@@ -179,7 +179,7 @@ public class iChat extends JFrame implements ActionListener {
   }
   public static void main(String... args) throws Exception {
     UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-    if (args.length == 1) {
+    if (args.length == 1 && args[0].indexOf(":") > 0) {
       new iChat("Joe's iChat", args[0]);
     } else {
       JOptionPane.showMessageDialog( null, "Usage: java iChat HostName:Port"); 
